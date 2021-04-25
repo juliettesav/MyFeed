@@ -1,0 +1,12 @@
+{% extends "FeedApp/base.html" %}
+
+{% block page_header %}
+    <div class="jumbotron">
+       <h1 class="display-3">Feed</h1>
+            <p class="lead">A Social Network where you can be you.
+            </p>
+
+            <a class="btn btn-lg btn-outline-primary" href="{% url 'users:register' %}"
+            role="button">Join Now &raquo;</a>
+    </div>
+{% endblock page_header %}
