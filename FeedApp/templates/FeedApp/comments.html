@@ -1,0 +1,23 @@
+{% extends "FeedApp/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<h2><p>Post: {{ post.description }} </p></h2>
+<h2><p><img src="{{ post.image.url}}" class="img-thumbnail" style="max-height:300px" alt="No image"><br><br></p></h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {% for c in comments %} 
+        <li>
+            <p> {{ c.text}} &nbsp -- &nbsp {{ c.username }}</p>
+        </li>
+        {% empty %} 
+        <li>There are no comments for this post.</li>
+        {% endfor %}
+    <p><input type="text" name="comment"</p>
+    <p><button type="submit" name="btn1" value=1>Submit Comment</button></p>
+
+    </form>
+
+{% endblock content %}

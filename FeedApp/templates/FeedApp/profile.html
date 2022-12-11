@@ -1,0 +1,17 @@
+{% extends "FeedApp/base.html" %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1><p>My Profile:</p></h1>
+
+<form action="{% url 'FeedApp:profile' %}" method='post'>
+    {% csrf_token %}
+    {{ form |crispy}}
+    <br><br>
+    <button name="submit" class="btn btn-outline-primary">Update</button>
+</form>
+
+
+{% endblock content %}

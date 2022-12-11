@@ -1,0 +1,20 @@
+{% extends "FeedApp/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <h2><p>New Post:</p></h2>
+
+
+
+
+<form action="{% url 'FeedApp:new_post' %}" method='post' enctype='multipart/form-data'>
+
+    {% csrf_token %}
+    {% bootstrap_form form %}
+
+    <br><br>
+    <button name="submit" class="btn btn-outline-primary">Post</button>
+</form>
+
+
+{% endblock content %}

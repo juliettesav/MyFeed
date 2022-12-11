@@ -1,0 +1,35 @@
+{% extends "FeedApp/base.html" %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<h1><p> Posts </p></h1>
+<form method="POST">
+{% csrf_token %}
+<table style="font-size: 25px;width:100%;">
+
+    {% for p,c,l in zipped_list %}
+        <tr style="border: 1px solid black;padding: 6px;">
+            <td> {{ p.username}}:&nbsp {{ p }} <br>
+                {% if p.image %}
+                <img src="{{p.image.url}}" class="img-thumbnail" style="max-height: 300px" alt="">
+                {% endif %}
+            </td>
+        </tr>
+        <tr style="border: 1px solid black;padding: 6px;">
+            <td> {{p.date_posted}}</td>
+            <td>
+                <button type="submit" name="like" value={{p.id}} style="background-color: transparent;border:none;">
+                Likes: &nbsp {{l}} 
+                </button>
+            </td>
+            <td>Comments: &nbsp <a href="{% url 'FeedApp:comments' p.id %}">{{c}}</a>&nbsp&nbsp</td>
+        </tr>
+    {% endfor %}
+
+</table>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,112 @@
+{% extends "FeedApp/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<style>
+    table {
+        font-size: 15px; width:auto; 
+    }
+
+    th,td {
+        border: 1px solid black; padding: 6px;
+    }
+</style>
+
+<h2><p>My Friends</p></h2>
+<table>
+    <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Member Since</th>
+    </tr>
+    {% for friend in user_friends_profiles %}
+    <tr>
+        <td>{{friend}}</td>
+        <td>{{friend.first_name}}</td>
+        <td>{{friend.last_name}}</td>
+        <td>{{friend.email}}</td>
+        <td>{{friend.created|date:"M d Y"}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br><br>
+
+<h2><p>Friend Requests sent</p></h2>
+<table>
+    <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date Sent</th>
+        <th>Status</th>
+        <th>Member Since</th>
+    </tr>
+    {% for r in user_relationships %}
+    <tr>
+        <td>{{r.receiver}}</td>
+        <td>{{r.receiver.first_name}}</td>
+        <td>{{r.receiver.last_name}}</td>
+        <td>{{r.created}}</td>
+        <td>{{r.status}}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+<br><br>
+
+<h2><p>Send a Friend Request</p></h2>
+<form action="{% url 'FeedApp:friends' %}" method='post'>
+    {% csrf_token %} 
+    <table>
+        <tr>
+            <th>Users</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Request</th>
+        </tr>
+    {% for profile in all_profiles %}
+    <tr>
+        <td>{{profile}}</td>
+        <td>{{profile.first_name}}</td>
+        <td>{{profile.last_name}}</td>
+        <td><input type="checkbox" name="send_requests" value="{{profile.id}}"></td>
+    </tr>
+    {% endfor %}
+    </table>
+    <br><br>
+    <button name="submit" class="btn btn-outline-primary" style="float: left;">Send Request</button>
+</form>
+
+<br><br><br><br>
+
+<h2><p>Friend Request received</p></h2>
+<form action="{% url 'FeedApp:friends' %}" method='post'>
+    {% csrf_token %} 
+    <table>
+        <tr>
+            <th>Users</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Request</th>
+        </tr>
+    {% for rr in request_received_profiles %}
+    <tr>
+        <td>{{rr.sender}}</td>
+        <td>{{rr.sender.first_name}}</td>
+        <td>{{rr.sender.last_name}}</td>
+        <td><input type="checkbox" name="receive_requests" value="{{rr.id}}"></td>
+    </tr>
+    {% endfor %}
+    </table>
+    <br><br>
+    <button name="submit" class="btn btn-outline-primary" style="float: left;">Approve Request</button>
+    <br><br><br><br>
+</form>
+
+
+
+{% endblock content %}
