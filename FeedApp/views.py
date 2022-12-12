@@ -138,14 +138,14 @@ def friends(request):
 
 
 
-        if request.method == 'POST' and request.POST.get("send_requests"):
-            receivers = request.POST.getlist("send_requests")
-            print(receivers)
-            for receiver in receivers:
-                receiver_profile = Profile.objects.get(id=receiver)
-                Relationship.objects.create(sender=user_profile, receiver=receiver_profile, status='sent')
+    if request.method == 'POST' and request.POST.get("send_requests"):
+        receivers = request.POST.getlist("send_requests")
+        print(receivers)
+        for receiver in receivers:
+            receiver_profile = Profile.objects.get(id=receiver)
+            Relationship.objects.create(sender=user_profile, receiver=receiver_profile, status='sent')
 
-            return redirect('FeedApp:friends')
+        return redirect('FeedApp:friends')
 
 
     if request.method == 'POST' and request.POST.get("receive_requests"):
